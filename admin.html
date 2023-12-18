@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin-autorisation.css">
+    <link rel="stylesheet" href="admin-settings.css">
+    <link rel="stylesheet" href="popup.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <div class="admin">
+
+        <!-- Окно для добавления нового зала -->
+        <div class="popup popup__add-hall">
+            <div class="popup__title-and-close">
+                <h2 class="popup__title">Добавление зала</h2>
+                <img src="/img/close.png" alt="close" class="popup__close popup__add-hall__close">
+            </div>
+            <div class="popup__value">
+                <form action="" class="popup__form">
+                    <label class="popup__form__label">Название зала</label>
+                    <input class="popup__form__input popup__form__input__add-hall" type="text" name="hallName" required placeholder='Например, "Зал 1"'>
+                    <div class="popup__form__buttons">
+                        <button type="submit" class="popup__btn-add popup__btn-add-hall">Добавить зал</button>
+                        <button type="button" class="popup__form__cancellation">Отменить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="admin-container">
+            <header class="admin__header">
+                <div class="admin__header__logo">
+                    <h1>Идем<span>в</span>кино</h1>
+                    <span class="under-logo">Администраторррская</span>
+                </div>
+            </header>
+            <div class="admin__login">
+                <div class="login__title">
+                    Авторизация
+                </div>
+                <form action="" class="login__form">
+                    <label>E-mail</label>
+                    <input type="email" name="login" placeholder="example@domain.xyz" required >
+                    <label class="login__label-password">Пароль</label>
+                    <input type="password" name="password" required >
+                    <button class="login__form__btn" type="submit" name="form_auth_submit">Авторизоваться</button>
+                </form>
+            </div>
+
+            <div class="admin__all-settings">
+                <div class="setting-header">
+                    <div class="setting-header__circle"></div>
+                    <div class="setting-header__title">Управление залами</div>
+                    <div class="setting-header__arrow">
+                        <img src="/img/arrow.png" alt="arrow" class="setting-header__arrow-img">
+                    </div>
+                </div>
+                <div class="setting-content">
+                    <div class="setting-content__container">
+                        <span class="setting-name">Доступные залы:</span>
+                        <ul class="all-halls"></ul>
+                        <button class="add-hall__btn">Создать зал</button>
+                    </div>
+                </div>
+
+                <div class="setting-header hall-configuration">
+                    <div class="setting-header__circle"></div>
+                    <div class="setting-header__title solid-line">Конфигурация залов</div>
+                    <div class="setting-header__arrow">
+                        <img src="/img/arrow.png" alt="arrow" class="setting-header__arrow-img">
+                    </div>
+                </div>
+                <div class="setting-content">
+                    <div class="setting-content__container">
+                        <span class="hall-selection__span">Выберите зал для конфигурации:</span>
+                        <div class="hall-configuration__all-halls"></div>
+                        <span class="number-of-seats__span">Укажите количество рядов и максимальное количество кресел в ряду:</span>
+                        <div class="number-of-seats__container">
+                            <div class="number-rows">
+                                <label class="number-rows__label">Рядов, шт</label>
+                                <input type="text" class="number-rows__input">
+                            </div>
+                            <div class="x">x</div>
+                            <div class="number-seats">
+                                <label class="number-seats__label">Мест, шт</label>
+                                <input type="text" class="number-seats__input">
+                            </div>
+                        </div>
+                        <span class="place-type__span">Теперь вы можете указать типы кресел на схеме зала:</span>
+                        <div class="all-types-place">
+                            <div class="type-place type-place__standart">
+                                <div class="type-place__color"></div>
+                                <span class="type-place__span"> — обычные кресла </span>
+                            </div>
+                            <div class="type-place type-place__vip">
+                                <div class="type-place__color"></div>
+                                <span class="type-place__span"> — VIP кресла </span>
+                            </div>
+                            <div class="type-place type-place__none">
+                                <div class="type-place__color"></div>
+                                <span class="type-place__span"> — заблокированные (нет кресла)</span>
+                            </div>
+                        </div>
+                        <span class="type-place__instruction">Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши</span>
+
+                        <div class="hall-scheme__container">
+                            <div class="hall-scheme__screen-and-hall">
+                                <span class="hall-scheme__screen">Экран</span>
+                                <div class="hall-scheme__hall"></div>
+                            </div>
+                        </div>
+
+                        <div class="hall-configuration__buttons">
+                            <button class="hall-configuration__button__cancel">Отмена</button>
+                            <button class="hall-configuration__button__save">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-header">
+                    <div class="setting-header__circle"></div>
+                    <div class="setting-header__title solid-line">Конфигурация цен</div>
+                    <div class="setting-header__arrow">
+                        <img src="/img/arrow.png" alt="arrow" class="setting-header__arrow-img">
+                    </div>
+                </div>
+                <div class="setting-content">
+                    <div class="setting-content__container price-configuration">
+                        <span class="price-configuration__span">Выберите зал для конфигурации:</span>
+                        <div class="price-configuration__all-halls"></div>
+                        <span class="price-configuration__span">Установите цены для типов кресел:</span>
+                        <div class="price__standart">
+                            <div class="price__standart__label-input">
+                                <label class="price__standart__label">Цена, рублей</label>
+                                <input type="text" class="price__standart__input">
+                            </div>
+                            <span class="type-place__span">за</span>
+                            <div class="price__standart__color"></div>
+                            <span class="type-place__span">обычные кресла</span>
+                        </div>
+                        <div class="price__vip">
+                            <div class="price__vip__label-input">
+                                <label class="price__vip__label">Цена, рублей</label>
+                                <input type="text" class="price__vip__input">
+                            </div>
+                            <span class="type-place__span">за</span>
+                            <div class="price__vip__color"></div>
+                            <span class="type-place__span"> VIP кресла</span>
+                        </div>
+                        <div class="hall-configuration__buttons">
+                            <button class="price__configuration__button__cancel">Отмена</button>
+                            <button class="price__configuration__button__save">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-header">
+                    <div class="setting-header__circle"></div>
+                    <div class="setting-header__title solid-line">Сетка сеансов</div>
+                    <div class="setting-header__arrow">
+                        <img src="/img/arrow.png" alt="arrow" class="setting-header__arrow-img">
+                    </div>
+                </div>
+                <div class="setting-content">
+                    <div class="setting-content__container">
+                        <button class="add__film__btn">Добавить фильм</button>
+                    </div>
+                </div>
+
+                <div class="setting-header">
+                    <div class="setting-header__circle"></div>
+                    <div class="setting-header__title">Открыть продажи</div>
+                    <div class="setting-header__arrow">
+                        <img src="/img/arrow.png" alt="arrow" class="setting-header__arrow-img">
+                    </div>
+                </div>
+                <div class="setting-content">
+                    <div class="setting-content__container">
+                        <span class="setting-name">Доступные залы:</span>
+                        <ul class="all-halls">
+                            <li id="hall1">
+                                <span>- Зал 1</span>
+                                <img src="/img/basket.png" alt="basket" class="basket">
+                            </li>
+                            <li id="hall2">
+                                <span>- Зал 2</span>
+                                <img src="/img/basket.png" alt="basket" class="basket">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+    <script src="autorisation.js"></script>
+    <script type="module" src="addhall.js"></script>
+    <script type="module"src="adminsettings.js"></script>
+</body>
+</html>

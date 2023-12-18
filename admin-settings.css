@@ -1,0 +1,335 @@
+.admin__all-settings {
+  display: none;
+  width: 100%;
+}
+
+.admin__all-settings-active {
+  display: block;
+}
+
+.setting-header {
+  display: flex;
+  background: #63536c;
+}
+
+.setting-header__circle {
+  width: 44px;
+  height: 44px;
+  box-sizing: border-box;
+  border-radius: 22px;
+  border: 4px solid #bc95d6;
+  background: #fff;
+  align-self: center;
+  margin: 0 -23px 0 40px;
+  z-index: 3;
+}
+
+.setting-header__title {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  align-self: center;
+  padding: 35px 0 35px 41px;
+  border-left: 2px solid white;
+  border-image: linear-gradient(
+    180deg,
+    rgb(99, 83, 108) 50%,
+    rgb(188, 149, 214) 50%
+  );
+  border-image-slice: 1;
+}
+
+.solid-line {
+  border-image: none;
+  border-left: 2px solid rgb(188, 149, 214);
+}
+
+.setting-header__arrow {
+  margin-left: auto;
+  align-self: center;
+}
+
+.setting-header__arrow-img {
+  width: 24px;
+  height: 16px;
+  margin-right: 42px;
+}
+
+.setting-content {
+  width: 100%;
+  background: rgba(225, 225, 225, 0.9);
+}
+
+.setting-content__container {
+  margin-left: 61px;
+  padding: 35px;
+  border-left: 2px solid #bc95d6;
+}
+
+.setting-name {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.all-halls li {
+  list-style: none;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.basket {
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 4px;
+  width: 12px;
+  height: 12px;
+  padding: 4px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12),
+    0px 3px 3px 0px rgba(0, 0, 0, 0.24);
+}
+
+.add-hall__btn,
+.hall-configuration__button__save,
+.price__configuration__button__save {
+  padding: 11.2px 31.381px 11.9px 31.729px;
+  margin-top: 22px;
+  border-radius: 3px;
+  background: #16a6af;
+  border: none;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12),
+    0px 3px 3px 0px rgba(0, 0, 0, 0.24);
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* Конфигурация залов */
+.hall-selection__span,
+.number-of-seats__span,
+.place-type__span,
+.price-configuration__span {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.hall-configuration__all-halls {
+  display: flex;
+  margin-bottom: 34px;
+}
+
+.hall-configuration__selection,
+.hall-configuration-price__selection {
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12),
+    0px 3px 3px 0px rgba(0, 0, 0, 0.24);
+  padding: 12.2px 20.25px 12.9px 21px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.hall-configuration__selection-active,
+.hall-configuration-price__selection-active {
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.12),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.24), 0px 6px 8px 0px rgba(0, 0, 0, 0.24);
+  scale: 1.04;
+  font-weight: 900;
+}
+
+.number-of-seats__container {
+  display: flex;
+  margin-top: 11px;
+  margin-bottom: 36px;
+  gap: 14px;
+}
+
+.number-rows,
+.number-seats {
+  display: flex;
+  flex-direction: column;
+}
+
+.number-rows__label,
+.number-seats__label,
+.type-place__span,
+.type-place__instruction,
+.price__standart__label,
+.price__vip__label {
+  color: #848484;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.number-rows__input,
+.number-seats__input,
+.price__standart__input,
+.price__vip__input {
+  padding: 8px 8.8px 9px 8.8px;
+  border: 1px solid #b7b7b7;
+  width: 82px;
+}
+
+.x {
+  justify-self: center;
+  color: #848484;
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 17px;
+}
+
+.all-types-place {
+  display: flex;
+  gap: 24px;
+  margin: 11px 0;
+}
+
+.type-place__color,
+.price__standart__color,
+.price__vip__color {
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.standart,
+.type-place__standart > .type-place__color,
+.price__standart__color {
+  border: 1px solid #393939;
+  background: #c4c4c4;
+}
+
+.vip,
+.type-place__vip > .type-place__color,
+.price__vip__color {
+  background-image: url("/img/vip-color.png");
+}
+
+.disabled,
+.type-place__none > .type-place__color {
+  border: 1px solid #c4c4c4;
+}
+
+.type-place {
+  display: flex;
+  gap: 3px;
+}
+
+.type-place__span {
+  font-size: 14px;
+  align-self: center;
+}
+
+.type-place__instruction {
+  font-size: 14px;
+}
+
+.hall-scheme__screen-and-hall {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hall-scheme__container {
+  border: 1px solid #000;
+  padding-top: 23px;
+  padding-bottom: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 11px;
+}
+
+.hall-scheme__screen {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px; /* 112.5% */
+  letter-spacing: 19px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.hall-scheme__hall {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hall-scheme__row {
+  display: flex;
+  gap: 10px;
+}
+
+.hall-scheme__row div {
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.hall-configuration__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 26px;
+}
+
+.hall-configuration__button__cancel,
+.price__configuration__button__cancel {
+  padding: 11.2px 31.387px 11.9px 31.763px;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12),
+    0px 3px 3px 0px rgba(0, 0, 0, 0.24);
+  color: #63536c;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  border: none;
+}
+
+.hall-configuration__button__save,
+.price__configuration__button__save {
+  margin-top: 0;
+}
+
+.price-configuration__all-halls {
+  display: flex;
+  margin-bottom: 34px;
+}
+
+.price__standart,
+.price__vip {
+  display: flex;
+  gap: 3px;
+  margin-top: 11px;
+}
+
+.price__standart__label-input,
+.price__vip__label-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.price__standart__color,
+.price__vip__color {
+  margin-top: 18px;
+}
+
+.price__standart span,
+.price__vip span {
+  display: block;
+  margin-top: 11px;
+}
