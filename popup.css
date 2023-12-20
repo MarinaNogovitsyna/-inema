@@ -5,7 +5,9 @@
   margin-top: 85px;
 }
 
-.popup__add-hall-active {
+.popup__add-hall-active,
+.popup__add-film-active,
+.popup__add-session-active {
   display: block;
 }
 
@@ -60,11 +62,12 @@
   gap: 14px;
 }
 
-.popup__btn-add {
+.popup__btn-add,
+.input__file-button {
   cursor: pointer;
   color: #fff;
   font-size: 14px;
-  font-weight: 500;
+  /* font-weight: 500; */
   text-transform: uppercase;
 
   padding: 11.2px 32px 11.9px 32px;
@@ -75,7 +78,8 @@
     0px 3px 3px 0px rgba(0, 0, 0, 0.24);
 }
 
-.popup__form__cancellation {
+.popup__form__cancellation,
+.popup__form-film__cancellation, .popup__form-session__cancellation {
   cursor: pointer;
   color: #63536c;
   font-size: 14px;
@@ -87,4 +91,34 @@
   background: #fff;
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12),
     0px 3px 3px 0px rgba(0, 0, 0, 0.24);
+}
+
+.popup__form__add-film > .popup__form__label {
+  margin-top: 0;
+}
+
+.popup__form__add-film .popup__form__label {
+  margin-top: 8px;
+}
+
+.popup__form__input__film-description {
+  height: 80px;
+}
+
+.input__file {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+.popup__form__select {
+  border: 1px solid #b7b7b7;
+  padding: 8px 12px;
+}
+
+.popup__form__select__halls, .popup__form__select__films {
+  margin-bottom: 8px;
+}
+.popup__form__input__time {
+  padding: 8px 0 8px 12px;
 }

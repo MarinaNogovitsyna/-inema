@@ -1,3 +1,5 @@
+import { openSessionPopup } from "/addsession.js";
+
 const allHalls = document.querySelector(".all-halls");
 
 // function getAllDataCeck() {
@@ -8,9 +10,9 @@ const allHalls = document.querySelector(".all-halls");
 //     });
 // }
 
-// getAllDataCeck()
+// getAllDataCeck();
 
-function getAllData() {
+export function getAllData() {
   return fetch("https://shfe-diplom.neto-server.ru/alldata")
     .then((response) => response.json())
     .then((data) => {
@@ -25,6 +27,7 @@ export function getAllHalls() {
     createAllHalls(data);
     createHallsForSelection();
     createHallsForChangePrice();
+    createAllSession();
   });
 }
 
@@ -58,6 +61,7 @@ async function deleteHall(el, id) {
   // .then((data) => console.log(data));
   await createHallsForSelection();
   await createHallsForChangePrice();
+  await createAllSession();
 }
 
 // Конфигурация залов
@@ -354,3 +358,160 @@ btnSavePrices.addEventListener("click", () => {
       .then((data) => console.log(data));
   });
 });
+
+// Отображение всех фильмов
+const colors = ["yellow", "green", "lightgreen", "lightblue", "darkblue"];
+const allFilms = document.querySelector(".all-films__container");
+
+createAllFilms();
+
+export function createAllFilms() {
+  allFilms.innerHTML = "";
+  getAllData().then((data) => {
+    const films = data.result.films;
+    films.map((el) => {
+      const film = document.createElement("div");
+      film.classList.add("film");
+      film.id = `film-${el.id}`;
+      film.dataset.id = el.id;
+      film.dataset.name = el.film_name;
+      film.dataset.duration = el.film_duration;
+      film.innerHTML = `<img src="${el.film_poster}" alt="img of film" class="film__poster">
+      <div class="film__name-and-duration">
+          <span class="film__name">${el.film_name}</span>
+          <span class="film__duration">${el.film_duration} минут</span>
+      </div>`;
+
+      const basket = document.createElement("img");
+      basket.src = "/img/basket.png";
+      basket.classList.add("basket");
+      basket.classList.add("film__basket");
+      basket.addEventListener("click", () =>
+        deleteFilm(basket.parentElement, el.id)
+      );
+
+      film.insertAdjacentElement("beforeend", basket);
+      film.addEventListener("mousedown", (event) => {
+        raisingFilm(film, event);
+      });
+      allFilms.insertAdjacentElement("beforeend", film);
+
+      const films = document.querySelectorAll(".film");
+      films.forEach((film, index) => {
+        const colorIndex = index % colors.length;
+        film.classList.add(`background-color-${colors[colorIndex]}`);
+      });
+    });
+  });
+}
+
+function deleteFilm(el, id) {
+  el.remove();
+  fetch(`https://shfe-diplom.neto-server.ru/film/${id}`, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+}
+
+// Отображение залов с полосой сеансов
+const allSession = document.querySelector(".all-sessions");
+
+function createAllSession() {
+  allSession.innerHTML = "";
+  getAllData().then((data) => {
+    const allHalls = data.result.halls;
+    allHalls.map((el) => {
+      const session = document.createElement("div");
+      session.classList.add("session");
+      session.innerHTML = `<span class="session__hall-name">${el.hall_name}</span>`;
+      const sessionScheme = document.createElement("div");
+      sessionScheme.classList.add("session__scheme");
+      sessionScheme.id = `session__scheme-${el.id}`;
+      sessionScheme.dataset.id = el.id;
+      // sessionScheme.addEventListener('mousemove', event => {moveFilm(sessionScheme, event)});
+      // sessionScheme.addEventListener('mouseup', event => {letGoFilm(sessionScheme, event)})
+
+      session.insertAdjacentElement("beforeend", sessionScheme);
+      allSession.insertAdjacentElement("beforeend", session);
+    });
+  });
+}
+
+// Перетаскивание фильма
+let draggedFilm = null;
+
+function raisingFilm(film, event) {
+  draggedFilm = film.cloneNode(true);
+  draggedFilm.style.position = "absolute";
+  draggedFilm.style.zIndex = 1000;
+  draggedFilm.style.transform = "translate(-50%, -50%)";
+  draggedFilm.style.transition = "transform 0.2s ease";
+  draggedFilm.style.left = `${event.pageX}px`;
+  draggedFilm.style.top = `${event.pageY}px`;
+  draggedFilm.style.width = `${film.getBoundingClientRect().width}px`;
+  document.body.appendChild(draggedFilm);
+
+  document.addEventListener("mousemove", moveFilm);
+  document.addEventListener("mouseup", letGoFilm);
+}
+
+function moveFilm(event) {
+  if (draggedFilm) {
+    draggedFilm.style.left = `${event.pageX}px`;
+    draggedFilm.style.top = `${event.pageY}px`;
+  }
+}
+
+function letGoFilm(event) {
+  if (draggedFilm) {
+    const sessionSchemes = Array.from(
+      document.querySelectorAll(".session__scheme")
+    );
+    // let isDropped = false;
+    sessionSchemes.map((sessionScheme) => {
+      if (
+        checkFilmPosition(
+          event.target.getBoundingClientRect(),
+          sessionScheme.getBoundingClientRect()
+        )
+      ) {
+        const sessionId = sessionScheme.dataset.id;
+        const filmId = draggedFilm.dataset.id;
+        console.log(`Film ID: ${filmId}, Session ID: ${sessionId}`);
+        // const filmBlock = document.getElementById(`film-${filmId}`);
+        // if (filmBlock) {
+        //   isDropped = true;
+        // }
+        draggedFilm.remove();
+        openSessionPopup(filmId, sessionId);
+      }
+    });
+    // if (!isDropped) {
+    draggedFilm.remove();
+    // }
+    draggedFilm = null;
+    document.removeEventListener("mousemove", moveFilm);
+    document.removeEventListener("mouseup", letGoFilm);
+  }
+}
+
+function checkFilmPosition(filmPosition, schemePosition) {
+  const filmTop = filmPosition.top;
+  const filmBottom = filmPosition.bottom;
+  const filmLeft = filmPosition.left;
+
+  const schemeTop = schemePosition.top;
+  const schemeBottom = schemePosition.bottom;
+  const schemeLeft = schemePosition.left;
+
+  if (
+    filmTop >= schemeTop &&
+    filmBottom <= schemeBottom &&
+    filmLeft >= schemeLeft
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}

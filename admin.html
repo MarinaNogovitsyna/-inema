@@ -33,6 +33,56 @@
             </div>
         </div>
 
+        <!-- Окно для добавления фильма -->
+        <div class="popup popup__add-film">
+            <div class="popup__title-and-close">
+                <h2 class="popup__title">Добавление фильма</h2>
+                <img src="/img/close.png" alt="close" class="popup__close popup__add-film__close">
+            </div>
+            <div class="popup__value">
+                <form action="" class="popup__form popup__form__add-film">
+                    <label class="popup__form__label">Название фильма</label>
+                    <input class="popup__form__input popup__form__input__film-name" type="text" name="filmName" required placeholder='Например, «Гражданин Кейн»'>
+                    <label class="popup__form__label">Продолжительность фильма (мин.)</label>
+                    <input class="popup__form__input popup__form__input__film-time" type="text" name="filmDuration" required>
+                    <label class="popup__form__label">Описание фильма</label>
+                    <textarea class="popup__form__input popup__form__input__film-description" type="text" name="filmDescription" required></textarea>
+                    <label class="popup__form__label">Страна</label>
+                    <input class="popup__form__input popup__form__input__film-origin" type="text" name="filmOrigin" required>
+                    <div class="popup__form__buttons">
+                        <button type="submit" class="popup__btn-add popup__btn-add-film">Добавить фильм</button>
+                        <input name="file" type="file" id="input__file" class="input input__file" multiple>
+                        <label for="input__file" class="input__file-button">
+                            <span class="input__file-button-text">Загрузить постер</span>
+                        </label>
+                        <button type="button" class="popup__form-film__cancellation">Отменить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Окно для добавления сеанса -->
+        <div class="popup popup__add-session">
+            <div class="popup__title-and-close">
+                <h2 class="popup__title">Добавление сеанса</h2>
+                <img src="/img/close.png" alt="close" class="popup__close popup__add-session__close">
+            </div>
+            <div class="popup__value">
+                <form action="" class="popup__form popup__form__add-session">
+                    <label for="select__halls" class="popup__form__label">Название зала</label>
+                    <select id="select__halls" class="popup__form__select popup__form__select__halls"></select>
+                    <label for="select__films" class="popup__form__label">Название фильма</label>
+                    <select id="select__films" class="popup__form__select popup__form__select__films"></select>
+                    <label for="select__time" class="popup__form__label">Время начала</label>
+                    <input type="time" id="select__time" class="popup__form__input popup__form__input__time" required>
+                    <div class="popup__form__buttons">
+                        <button type="submit" class="popup__btn-add popup__btn-add-session">Добавить сеанс</button>
+                        <button type="button" class="popup__form-session__cancellation">Отменить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="admin-container">
             <header class="admin__header">
                 <div class="admin__header__logo">
@@ -170,6 +220,8 @@
                 <div class="setting-content">
                     <div class="setting-content__container">
                         <button class="add__film__btn">Добавить фильм</button>
+                        <div class="all-films__container"></div>
+                        <div class="all-sessions"></div>
                     </div>
                 </div>
 
@@ -201,6 +253,8 @@
     <script src="index.js"></script>
     <script src="autorisation.js"></script>
     <script type="module" src="addhall.js"></script>
+    <script type="module" src="addfilm.js"></script>
+    <script type="module" src="addsession.js"></script>
     <script type="module"src="adminsettings.js"></script>
 </body>
 </html>
