@@ -1,4 +1,4 @@
-import { openSessionPopup, getMinutes } from "/addsession.js";
+import { openSessionPopup, getMinutes } from "./addsession.js";
 
 const allHalls = document.querySelector(".all-halls");
 

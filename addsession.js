@@ -1,4 +1,4 @@
-import { getAllData, createAllSeances } from "/adminsettings.js";
+import { getAllData, createAllSeances } from "./adminsettings.js";
 
 const popupAddSession = document.querySelector(".popup__add-session");
 const adminPageSettings = document.querySelector(".admin-container");
