@@ -67,7 +67,6 @@
   cursor: pointer;
   color: #fff;
   font-size: 14px;
-  /* font-weight: 500; */
   text-transform: uppercase;
 
   padding: 11.2px 32px 11.9px 32px;
@@ -79,7 +78,8 @@
 }
 
 .popup__form__cancellation,
-.popup__form-film__cancellation, .popup__form-session__cancellation {
+.popup__form-film__cancellation,
+.popup__form-session__cancellation {
   cursor: pointer;
   color: #63536c;
   font-size: 14px;
@@ -116,7 +116,8 @@
   padding: 8px 12px;
 }
 
-.popup__form__select__halls, .popup__form__select__films {
+.popup__form__select__halls,
+.popup__form__select__films {
   margin-bottom: 8px;
 }
 .popup__form__input__time {

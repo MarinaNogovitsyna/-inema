@@ -55,7 +55,6 @@ async function fetchAddFilm(name, duration, description, origin, poster) {
     body: params,
   });
   let data = await response.json();
-  console.log(data);
   await createAllFilms();
   if (!data.success) {
     alert(data.error);

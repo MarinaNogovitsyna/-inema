@@ -81,7 +81,6 @@ async function fetchAddSession(hallId, filmId, time) {
       body: params,
     });
     let data = await response.json();
-    console.log(data);
     if (!data.success) {
       alert(data.error);
     }
@@ -109,7 +108,6 @@ async function isCorrectTime(time, filmId, hallId) {
 
   const data = await getAllData();
   const allSeances = data.result.seances;
-  console.log(allSeances);
   let isCorrect = true;
   for (const el of allSeances) {
     if (el.seance_hallid == hallId) {
@@ -133,12 +131,3 @@ async function isCorrectTime(time, filmId, hallId) {
 export function getMinutes(time) {
   return +time.slice(0, 2) * 60 + +time.slice(3);
 }
-
-// async function deleteSession(){
-//     await fetch(`https://shfe-diplom.neto-server.ru/seance/11`, {
-//     method: "DELETE",
-//   }).then((response) => response.json())
-//   .then((data) => console.log(data));
-// }
-
-// deleteSession()

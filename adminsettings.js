@@ -2,16 +2,6 @@ import { openSessionPopup, getMinutes } from "/addsession.js";
 
 const allHalls = document.querySelector(".all-halls");
 
-// function getAllDataCeck() {
-//   return fetch("https://shfe-diplom.neto-server.ru/alldata")
-//     .then((response) => response.json())
-//     .then((data) => {
-//       console.log(data);
-//     });
-// }
-
-// getAllDataCeck();
-
 export function getAllData() {
   return fetch("https://shfe-diplom.neto-server.ru/alldata")
     .then((response) => response.json())
@@ -28,6 +18,7 @@ export function getAllHalls() {
     createHallsForSelection();
     createHallsForChangePrice();
     createAllSession();
+    createHallsForSales();
   });
 }
 
@@ -58,10 +49,10 @@ async function deleteHall(el, id) {
   await fetch(`https://shfe-diplom.neto-server.ru/hall/${id}`, {
     method: "DELETE",
   }).then((response) => response.json());
-  // .then((data) => console.log(data));
   await createHallsForSelection();
   await createHallsForChangePrice();
   await createAllSession();
+  await createHallsForSales();
 }
 
 // Конфигурация залов
@@ -433,8 +424,6 @@ function createAllSession() {
       sessionScheme.classList.add("session__scheme");
       sessionScheme.id = `session__scheme-${el.id}`;
       sessionScheme.dataset.id = el.id;
-      // sessionScheme.addEventListener('mousemove', event => {moveFilm(sessionScheme, event)});
-      // sessionScheme.addEventListener('mouseup', event => {letGoFilm(sessionScheme, event)})
 
       session.insertAdjacentElement("beforeend", sessionScheme);
       allSession.insertAdjacentElement("beforeend", session);
@@ -473,7 +462,6 @@ function letGoFilm(event) {
     const sessionSchemes = Array.from(
       document.querySelectorAll(".session__scheme")
     );
-    // let isDropped = false;
     sessionSchemes.map((sessionScheme) => {
       if (
         checkFilmPosition(
@@ -484,17 +472,11 @@ function letGoFilm(event) {
         const sessionId = sessionScheme.dataset.id;
         const filmId = draggedFilm.dataset.id;
         console.log(`Film ID: ${filmId}, Session ID: ${sessionId}`);
-        // const filmBlock = document.getElementById(`film-${filmId}`);
-        // if (filmBlock) {
-        //   isDropped = true;
-        // }
         draggedFilm.remove();
         openSessionPopup(filmId, sessionId);
       }
     });
-    // if (!isDropped) {
     draggedFilm.remove();
-    // }
     draggedFilm = null;
     document.removeEventListener("mousemove", moveFilm);
     document.removeEventListener("mouseup", letGoFilm);
@@ -592,4 +574,93 @@ async function deleteSeance(seanceId) {
     .then((response) => response.json())
     .then((data) => console.log(data));
   await createAllSeances();
+}
+
+// Залы для открытия/закрытия продаж
+const containerHallsForSales = document.querySelector(
+  ".sales-configuration__all-halls"
+);
+const salesBtn = document.querySelector(".setting__open-sales-btn");
+
+function createHallsForSales() {
+  containerHallsForSales.innerHTML = "";
+  getAllData().then((data) => {
+    const allHalls = data.result.halls;
+    allHalls.map((el) => {
+      const hall = document.createElement("div");
+      hall.textContent = el.hall_name;
+      hall.classList.add("sales-configuration__selection");
+      hall.id = `hall-for-sales-${el.id}`;
+      hall.addEventListener("click", () =>
+        changeSelectionHallforSales(hall.id)
+      );
+      hall.dataset.id = el.id;
+      hall.dataset.isopen = el.hall_open;
+
+      containerHallsForSales.insertAdjacentElement("beforeend", hall);
+      containerHallsForSales.firstChild.classList.add(
+        "sales-configuration__selection-active"
+      );
+
+      getSalesBtnText(containerHallsForSales.firstChild);
+    });
+  });
+}
+
+function getSalesBtnText(activeHall) {
+  if (activeHall.dataset.isopen == 1) {
+    salesBtn.textContent = "Закрыть продажу билетов";
+  } else {
+    salesBtn.textContent = "Открыть продажу билетов";
+  }
+}
+
+function changeSelectionHallforSales(id) {
+  const allHalls = Array.from(containerHallsForSales.children);
+  allHalls.map((el) => {
+    if (
+      el.id === id &&
+      !el.classList.contains("sales-configuration__selection-active")
+    ) {
+      el.classList.add("sales-configuration__selection-active");
+      getSalesBtnText(el);
+    } else if (el.id !== id) {
+      el.classList.remove("sales-configuration__selection-active");
+    }
+  });
+}
+
+// Открытие/закрытие продаж
+salesBtn.addEventListener("click", () => openCloseSales());
+
+function openCloseSales() {
+  const activeHall = document.querySelector(
+    ".sales-configuration__selection-active"
+  );
+  const activeHallId = activeHall.dataset.id;
+  const activeHallIsOpen = activeHall.dataset.isopen;
+
+  if (activeHallIsOpen == 0) {
+    const params = new FormData();
+    params.set("hallOpen", "1");
+    fetch(`https://shfe-diplom.neto-server.ru/open/${activeHallId}`, {
+      method: "POST",
+      body: params,
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+    activeHall.dataset.isopen = 1;
+    getSalesBtnText(activeHall);
+  } else {
+    const params = new FormData();
+    params.set("hallOpen", "0");
+    fetch(`https://shfe-diplom.neto-server.ru/open/${activeHallId}`, {
+      method: "POST",
+      body: params,
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+    activeHall.dataset.isopen = 0;
+    getSalesBtnText(activeHall);
+  }
 }
