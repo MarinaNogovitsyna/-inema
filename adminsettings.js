@@ -32,7 +32,7 @@ function createAllHalls(data) {
     hall.innerHTML = `<span>- ${el.hall_name}</span>`;
 
     let basket = document.createElement("img");
-    basket.src = "/img/basket.png";
+    basket.src = "img/basket.png";
     basket.className = "basket";
     basket.addEventListener("click", () =>
       deleteHall(basket.parentElement, el.id)
@@ -374,7 +374,7 @@ export function createAllFilms() {
       </div>`;
 
       const basket = document.createElement("img");
-      basket.src = "/img/basket.png";
+      basket.src = "img/basket.png";
       basket.classList.add("basket");
       basket.classList.add("film__basket");
       basket.addEventListener("click", () =>
