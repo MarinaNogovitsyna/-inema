@@ -1,6 +1,7 @@
 .admin__all-settings {
   display: none;
   width: 100%;
+  padding-bottom: 30px;
 }
 
 .admin__all-settings-active {
@@ -96,7 +97,8 @@
 .add-hall__btn,
 .hall-configuration__button__save,
 .price__configuration__button__save,
-.add__film__btn {
+.add__film__btn,
+.sessions__configuration__button__save {
   padding: 11.2px 31.381px 11.9px 31.729px;
   margin-top: 22px;
   border-radius: 3px;
@@ -289,7 +291,8 @@
 }
 
 .hall-configuration__button__cancel,
-.price__configuration__button__cancel {
+.price__configuration__button__cancel,
+.sessions__configuration__button__cancel {
   padding: 11.2px 31.387px 11.9px 31.763px;
   border-radius: 3px;
   background: #fff;
@@ -300,11 +303,13 @@
   font-weight: 500;
   text-transform: uppercase;
   border: none;
+  cursor: pointer;
 }
 
 .hall-configuration__button__save,
 .price__configuration__button__save,
-.add__film__btn {
+.add__film__btn,
+.sessions__configuration__button__save {
   margin-top: 0;
 }
 
@@ -422,4 +427,48 @@
   border: 1px solid #848484;
   padding: 10px 0;
   box-sizing: border-box;
+  position: relative;
+}
+
+.session__film {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  font-size: 10px;
+  padding: 3px;
+  box-sizing: border-box;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.session__film__line-and-time {
+  position: absolute;
+  top: 48px;
+  left: -13px;
+}
+
+.session__film__line {
+  width: 1px;
+  height: 5px;
+  background: #848484;
+  margin-left: 12px;
+}
+
+.hall-configuration__buttons {
+  margin-top: 36px;
+}
+
+.setting-content__container__open-sales {
+  border: none;
+}
+
+.top-line {
+  border-image: linear-gradient(
+    180deg,
+    rgb(188, 149, 214) 50%,
+    rgb(99, 83, 108) 50%
+  );
+  border-image-slice: 1;
 }

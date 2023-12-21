@@ -1,4 +1,4 @@
-import { getAllData } from "/adminsettings.js";
+import { getAllData, createAllSeances } from "/adminsettings.js";
 
 const popupAddSession = document.querySelector(".popup__add-session");
 const adminPageSettings = document.querySelector(".admin-container");
@@ -85,6 +85,8 @@ async function fetchAddSession(hallId, filmId, time) {
     if (!data.success) {
       alert(data.error);
     }
+    createAllSeances();
+    location.reload();
   }
 }
 
@@ -128,13 +130,15 @@ async function isCorrectTime(time, filmId, hallId) {
   return isCorrect;
 }
 
-function getMinutes(time) {
+export function getMinutes(time) {
   return +time.slice(0, 2) * 60 + +time.slice(3);
 }
 
 // async function deleteSession(){
-//     await fetch(`https://shfe-diplom.neto-server.ru/seance/2`, {
+//     await fetch(`https://shfe-diplom.neto-server.ru/seance/11`, {
 //     method: "DELETE",
 //   }).then((response) => response.json())
 //   .then((data) => console.log(data));
 // }
+
+// deleteSession()

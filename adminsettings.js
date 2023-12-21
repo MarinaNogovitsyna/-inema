@@ -1,4 +1,4 @@
-import { openSessionPopup } from "/addsession.js";
+import { openSessionPopup, getMinutes } from "/addsession.js";
 
 const allHalls = document.querySelector(".all-halls");
 
@@ -400,6 +400,7 @@ export function createAllFilms() {
       films.forEach((film, index) => {
         const colorIndex = index % colors.length;
         film.classList.add(`background-color-${colors[colorIndex]}`);
+        film.dataset.color = colors[colorIndex];
       });
     });
   });
@@ -411,7 +412,10 @@ function deleteFilm(el, id) {
     method: "DELETE",
   })
     .then((response) => response.json())
-    .then((data) => console.log(data));
+    .then((data) => {
+      console.log(data);
+      createAllSeances();
+    });
 }
 
 // Отображение залов с полосой сеансов
@@ -435,6 +439,7 @@ function createAllSession() {
       session.insertAdjacentElement("beforeend", sessionScheme);
       allSession.insertAdjacentElement("beforeend", session);
     });
+    createAllSeances();
   });
 }
 
@@ -514,4 +519,77 @@ function checkFilmPosition(filmPosition, schemePosition) {
   } else {
     return false;
   }
+}
+
+// Создание схемы сеансов
+export function createAllSeances() {
+  const allHalls = Array.from(document.querySelectorAll(".session__scheme"));
+  const allFilms = Array.from(document.querySelectorAll(".film"));
+  const hallLength = allHalls[0].getBoundingClientRect().width;
+  const minutInPixel = hallLength / 1439;
+
+  allHalls.forEach((el) => (el.innerHTML = ""));
+
+  getAllData().then((data) => {
+    const allSeances = data.result.seances;
+    allSeances.map((seance) => {
+      const hall = allHalls.find((el) => el.dataset.id == seance.seance_hallid);
+      const film = allFilms.find((el) => el.dataset.id == seance.seance_filmid);
+
+      const filmInHall = document.createElement("div");
+      filmInHall.classList.add("session__film");
+      filmInHall.dataset.seanceid = seance.id;
+      const filmInHallSpan = document.createElement("span");
+      filmInHallSpan.classList.add("session__film-name");
+      filmInHallSpan.textContent = film.dataset.name;
+      filmInHall.innerHTML = `
+      <div class="session__film__line-and-time">
+          <div class="session__film__line"></div>
+          <span class="session__film-time">${seance.seance_time}</span>
+      </div>`;
+      filmInHall.insertAdjacentElement("afterbegin", filmInHallSpan);
+      filmInHall.style.left = `${
+        getMinutes(seance.seance_time) * minutInPixel
+      }px`;
+      filmInHall.classList.add(`background-color-${film.dataset.color}`);
+      filmInHall.style.width = `${film.dataset.duration * minutInPixel}px`;
+
+      filmInHall.addEventListener("mouseenter", () =>
+        hoverEffectOnFilm(filmInHallSpan)
+      );
+      filmInHall.addEventListener("mouseleave", () =>
+        deleteHoverEffectOnFilm(filmInHallSpan, film.dataset.name)
+      );
+
+      hall.insertAdjacentElement("beforeend", filmInHall);
+      filmInHall.addEventListener("click", () =>
+        deleteSeance(filmInHall.dataset.seanceid)
+      );
+      filmInHall.style.top = `-${getTopPosition(hall, filmInHall)}px`;
+    });
+  });
+}
+
+function getTopPosition(hall, film) {
+  const hallTop = hall.getBoundingClientRect().top + 10;
+  const filmTop = film.getBoundingClientRect().top;
+  return filmTop - hallTop;
+}
+
+// Удаление сеанса
+function hoverEffectOnFilm(filmName) {
+  filmName.textContent = "Удалить сеанс";
+}
+
+function deleteHoverEffectOnFilm(filmSpan, filmName) {
+  filmSpan.textContent = filmName;
+}
+
+async function deleteSeance(seanceId) {
+  await fetch(`https://shfe-diplom.neto-server.ru/seance/${seanceId}`, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+  await createAllSeances();
 }
