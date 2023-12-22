@@ -44,7 +44,7 @@ body {
 
 .client {
   width: 100%;
-  background-image: url("/img/mainbackground.jfif");
+  background-image: url("../img/mainbackground.jfif");
   background-repeat: no-repeat;
   background-size: cover;
   /* background-position-y: -210px; */

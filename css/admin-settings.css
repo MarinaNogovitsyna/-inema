@@ -226,7 +226,7 @@
 .vip,
 .type-place__vip > .type-place__color,
 .price__vip__color {
-  background-image: url("/img/vip-color.png");
+  background-image: url("../img/vip-color.png");
 }
 
 .disabled,
