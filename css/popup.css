@@ -2,13 +2,18 @@
   display: none;
   width: 60%;
   margin: auto;
-  margin-top: 85px;
 }
 
 .popup__add-hall-active,
 .popup__add-film-active,
 .popup__add-session-active {
   display: block;
+  position: absolute;
+  top: 85px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10012;
 }
 
 .popup__title-and-close {

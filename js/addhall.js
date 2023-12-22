@@ -2,14 +2,14 @@ import { getAllHalls } from "./adminsettings.js";
 
 const btnAddHall = document.querySelector(".add-hall__btn");
 const popupAddHall = document.querySelector(".popup__add-hall");
-const adminPageSettings = document.querySelector(".admin-container");
+const adminPageSettings = document.querySelector(".admin");
 const popupClose = document.querySelector(".popup__close");
 const popupCancellation = document.querySelector(".popup__form__cancellation");
 const popupBtnAddHall = document.querySelector(".popup__btn-add-hall");
 
 btnAddHall.addEventListener("click", () => {
   popupAddHall.classList.add("popup__add-hall-active");
-  adminPageSettings.classList.add("hidden");
+  adminPageSettings.classList.add("admin__black");
 });
 
 popupClose.addEventListener("click", closePopup);
@@ -18,7 +18,7 @@ popupCancellation.addEventListener("click", closePopup);
 function closePopup() {
   const parentPopup = popupClose.closest(".popup");
   parentPopup.classList.remove("popup__add-hall-active");
-  adminPageSettings.classList.remove("hidden");
+  adminPageSettings.classList.remove("admin__black");
 }
 
 popupBtnAddHall.addEventListener("click", (e) => {

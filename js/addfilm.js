@@ -2,7 +2,7 @@ import { createAllFilms } from "./adminsettings.js";
 
 const btnAddFilm = document.querySelector(".add__film__btn");
 const popupAddFilm = document.querySelector(".popup__add-film");
-const adminPageSettings = document.querySelector(".admin-container");
+const adminPageSettings = document.querySelector(".admin");
 const popupClose = document.querySelector(".popup__add-film__close");
 const popupCancellation = document.querySelector(
   ".popup__form-film__cancellation"
@@ -11,7 +11,8 @@ const popupBtnAddFilm = document.querySelector(".popup__btn-add-film");
 
 btnAddFilm.addEventListener("click", () => {
   popupAddFilm.classList.add("popup__add-film-active");
-  adminPageSettings.classList.add("hidden");
+  popupAddFilm.style.top = `${document.documentElement.scrollTop + 60}px`;
+  adminPageSettings.classList.add("admin__black");
 });
 
 popupClose.addEventListener("click", closePopup);
@@ -20,7 +21,7 @@ popupCancellation.addEventListener("click", closePopup);
 function closePopup() {
   const parentPopup = popupClose.closest(".popup");
   parentPopup.classList.remove("popup__add-film-active");
-  adminPageSettings.classList.remove("hidden");
+  adminPageSettings.classList.remove("admin__black");
 }
 
 popupBtnAddFilm.addEventListener("click", (e) => {

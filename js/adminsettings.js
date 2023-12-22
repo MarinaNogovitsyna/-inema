@@ -24,6 +24,21 @@ export function getAllHalls() {
 
 getAllHalls();
 
+// Сворачивание настроек
+function toggleSettingContent(event) {
+  const arrow = event.target;
+  const section = arrow.closest("section");
+  const content = section.querySelector(".setting-content");
+
+  content.classList.toggle("hidden");
+  arrow.classList.toggle("rotated");
+}
+
+const arrows = document.querySelectorAll(".setting-header__arrow-img");
+arrows.forEach((arrow) => {
+  arrow.addEventListener("click", toggleSettingContent);
+});
+
 function createAllHalls(data) {
   let halls = data.result.halls;
   halls.map((el) => {

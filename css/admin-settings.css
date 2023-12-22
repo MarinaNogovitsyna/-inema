@@ -1,3 +1,7 @@
+.rotated {
+  transform: rotate(270deg);
+}
+
 .admin__all-settings {
   display: none;
   width: 100%;
@@ -55,6 +59,7 @@
   width: 24px;
   height: 16px;
   margin-right: 42px;
+  cursor: pointer;
 }
 
 .setting-content {
@@ -221,7 +226,7 @@
 .vip,
 .type-place__vip > .type-place__color,
 .price__vip__color {
-  background-image: url("img/vip-color.png");
+  background-image: url("/img/vip-color.png");
 }
 
 .disabled,

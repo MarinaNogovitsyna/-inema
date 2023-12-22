@@ -1,7 +1,7 @@
 import { getAllData, createAllSeances } from "./adminsettings.js";
 
 const popupAddSession = document.querySelector(".popup__add-session");
-const adminPageSettings = document.querySelector(".admin-container");
+const adminPageSettings = document.querySelector(".admin");
 const popupClose = document.querySelector(".popup__add-session__close");
 const popupCancellation = document.querySelector(
   ".popup__form-session__cancellation"
@@ -13,7 +13,8 @@ const inputTime = document.querySelector(".popup__form__input__time");
 
 export function openSessionPopup(filmId, sessionId) {
   popupAddSession.classList.add("popup__add-session-active");
-  adminPageSettings.classList.add("hidden");
+  popupAddSession.style.top = `${document.documentElement.scrollTop + 60}px`;
+  adminPageSettings.classList.add("admin__black");
   addOptions(filmId, sessionId);
 }
 
@@ -23,7 +24,7 @@ popupCancellation.addEventListener("click", closePopup);
 function closePopup() {
   const parentPopup = popupClose.closest(".popup");
   parentPopup.classList.remove("popup__add-session-active");
-  adminPageSettings.classList.remove("hidden");
+  adminPageSettings.classList.remove("admin__black");
 }
 
 function addOptions(filmId, sessionId) {
