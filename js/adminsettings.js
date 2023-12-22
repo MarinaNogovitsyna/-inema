@@ -47,7 +47,7 @@ function createAllHalls(data) {
     hall.innerHTML = `<span>- ${el.hall_name}</span>`;
 
     let basket = document.createElement("img");
-    basket.src = "../img/basket.png";
+    basket.src = "img/basket.png";
     basket.className = "basket";
     basket.addEventListener("click", () =>
       deleteHall(basket.parentElement, el.id)
