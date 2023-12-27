@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/seance.css">
+    <link rel="stylesheet" href="css/ticket.css">
     <title>Document</title>
 </head>
 <body>
@@ -67,7 +68,7 @@
                     <div class="seance__all-seats-types">
                         <div class="seance__seat__color-and-name seance__seat-standart-free">
                             <div class="seance__seat-type color__seats-standart-free"></div>
-                            <span class="seance__seat__name">Свободно (250руб)</span>
+                            <span class="seance__seat__name">Свободно (<span class="seance__seat__standart-cost"></span>руб)</span>
                         </div>
                         <div class="seance__seat__color-and-name seance__seat-busy">
                             <div class="seance__seat-type color__busy"></div>
@@ -75,7 +76,7 @@
                         </div>
                         <div class="seance__seat__color-and-name seance__seat-standart-vip">
                             <div class="seance__seat-type color__seats-vip-free"></div>
-                            <span class="seance__seat__name">Свободно VIP (350руб)</span>
+                            <span class="seance__seat__name">Свободно VIP (<span class="seance__seat__vip-cost"></span>руб)</span>
                         </div>
                         <div class="seance__seat__color-and-name seance__seat-selected">
                             <div class="seance__seat-type color__seats-selected"></div>
@@ -86,6 +87,40 @@
                 <div class="popup__seance__buttons">
                     <button class="client__btn seanse__btn__reserve">Забронировать</button>
                     <button class="client__btn__cancel seanse__btn__cancel">Отменить</button>
+                </div>
+            </div>
+
+            <!-- Окно для получения кода брониования -->
+            <div class="popup__get-code hidden">
+                <h1 class="popup__get-code__title">Вы выбрали билеты:</h1>
+                <div class="popup__get-code-container">
+                    <div class="popup__get-code__description">
+                        <span class="description__name">На фильм: 
+                            <span class="description__item description__film-name"></span>
+                        </span>
+                        <span class="description__name">Места: 
+                            <span class="description__item description__seats"></span>
+                        </span>
+                        <span class="description__name">В зале: 
+                            <span class="description__item description__hall"></span>
+                        </span>
+                        <span class="description__name">Дата: 
+                            <span class="description__item description__date"></span>
+                        </span>
+                        <span class="description__name">Начало сеанса: 
+                            <span class="description__item description__time"></span>
+                        </span>
+                        <span class="description__name">Стоимость:  
+                            <span class="description__item description__coast"></span>
+                            рублей
+                        </span>
+                    </div>
+                    <div class="popup__get-code__buttons">
+                        <button class="client__btn get-code__btn">Получить код бронирования</button>
+                        <button class="client__btn__cancel get-code__btn__cancel">Отменить</button>
+                    </div>
+                    <span class="popup__get-code__bottom-text">После оплаты билет будет доступен в этом окне, а также придёт вам на почту. Покажите QR-код нашему контроллёру у входа в зал.</span>
+                    <span class="popup__get-code__bottom-text">Приятного просмотра!</span>
                 </div>
             </div>
 
@@ -125,5 +160,7 @@
     </div>
     <script type="module"src="js/index.js"></script>
     <script type="module" src="js/seance.js"></script>
+    <script type="module" src="js/getcode.js"></script>
+    <script type="module" src="js/getticket.js"></script>
 </body>
 </html>

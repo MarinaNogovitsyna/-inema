@@ -1,4 +1,5 @@
 import { getAllData } from "./index.js";
+import { openPopupGetCode } from "./getcode.js";
 
 const popupSeance = document.querySelector(".popup__seance");
 const btnLogin = document.querySelector(".client__header__login");
@@ -29,13 +30,17 @@ function createInfoSeance(seanceInHall, filmHall, film) {
   const hallName = document.querySelector(".seance__hall-name");
   const seanceDate = document.querySelector(".seance__data");
   const currentData = document.querySelector(".client__header__data__active");
+  const standartCost = document.querySelector(".seance__seat__standart-cost");
+  const vipCost = document.querySelector(".seance__seat__vip-cost");
 
   seanceDate.textContent = `Дата: ${currentData.dataset.date}`;
   hallName.textContent = filmHall.dataset.hallname;
   seanceTime.textContent = `Начало сеанса: ${seanceInHall.dataset.time}`;
   filmName.textContent = film.dataset.name;
+  standartCost.textContent = `${filmHall.dataset.standartcost}`;
+  vipCost.textContent = `${filmHall.dataset.vipcost}`;
 
-  createHallScheme(seanceInHall.dataset.id, currentData.dataset.date);
+  createHallScheme(seanceInHall.dataset.id, currentData.dataset.date, filmHall);
 }
 
 function getHallConfig(seanceId, date) {
@@ -48,9 +53,10 @@ function getHallConfig(seanceId, date) {
     });
 }
 
-function createHallScheme(seanceId, currentData) {
+function createHallScheme(seanceId, currentData, filmHall) {
   const date = getDateForFech(currentData);
   const hallSchemeContainer = document.querySelector(".seance__hall-scheme");
+  const btnReserve = document.querySelector(".seanse__btn__reserve");
   hallSchemeContainer.innerHTML = "";
 
   getHallConfig(seanceId, date).then((data) => {
@@ -77,6 +83,9 @@ function createHallScheme(seanceId, currentData) {
 
       hallSchemeContainer.appendChild(row);
     }
+    btnReserve.addEventListener("click", () => {
+      reserveSeance(seanceId, date, hallSchemeContainer, filmHall);
+    });
   });
 }
 
@@ -93,5 +102,44 @@ function getDateForFech(date) {
   return `${year}-${mounth}-${day}`;
 }
 
-// ПОСЛЕ НАЖАТИЯ НА Получить код бронирования ПОМЕНЯТЬ DATA-TYPE В МЕСТАХ НА taken (возможно)
+function reserveSeance(seanceId, date, hallSchemeContainer, filmHall) {
+  const hallId = filmHall.dataset.id;
+  const arrayOfSeats = [];
+  const allRows = hallSchemeContainer.children;
 
+  if (hallSchemeContainer.querySelector(".color__seats-selected") === null) {
+    alert("Выберете места");
+    return;
+  }
+
+  getAllData().then((data) => {
+    const allHalls = data.result.halls;
+
+    for (let i = 0; i < allRows.length; i++) {
+      const seatsInRow = Array.from(
+        allRows[i].querySelectorAll(".seance__seat")
+      );
+
+      for (let j = 0; j < seatsInRow.length; j++) {
+        if (seatsInRow[j].classList.contains("color__seats-selected")) {
+          const rowNumber = seatsInRow[j].dataset.row;
+          const placeNumber = seatsInRow[j].dataset.place;
+          const seatType = seatsInRow[j].dataset.type;
+          const seatCost = allHalls.find((hall) => hall.id == hallId)[
+            `hall_price_${seatType}`
+          ];
+
+          arrayOfSeats.push({
+            row: rowNumber,
+            place: placeNumber,
+            coast: seatCost,
+          });
+        }
+      }
+    }
+
+    openPopupGetCode(seanceId, date, arrayOfSeats, data);
+  });
+}
+
+// ПОСЛЕ НАЖАТИЯ НА Получить код бронирования ПОМЕНЯТЬ DATA-TYPE В МЕСТАХ НА taken (возможно)

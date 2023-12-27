@@ -135,8 +135,17 @@ function createHallsForFilm(allHalls, allSeances, film) {
       const hallName = allHalls.find(
         (el) => el.id == seance.seance_hallid
       ).hall_name;
+      const hallStandartCost = allHalls.find(
+        (el) => el.id == seance.seance_hallid
+      ).hall_price_standart;
+      const hallVipCost = allHalls.find(
+        (el) => el.id == seance.seance_hallid
+      ).hall_price_vip;
+
       filmHall.innerHTML = `<span class="hall__name">${hallName}</span>`;
       filmHall.dataset.hallname = hallName;
+      filmHall.dataset.standartcost = hallStandartCost;
+      filmHall.dataset.vipcost = hallVipCost;
       hallsContainer.insertAdjacentElement("beforeend", filmHall);
       createSeancesForHall(filmHall, allSeances, film);
     }
