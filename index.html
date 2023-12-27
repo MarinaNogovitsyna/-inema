@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/seance.css">
     <title>Document</title>
 </head>
 <body>
@@ -49,8 +50,47 @@
                     </div>
                 </div>
             </header>
+
+            <!-- Окно для выбора места -->
+            <div class="popup popup__seance hidden">
+                <div class="seance__description">
+                    <span class="seance__film-name"></span>
+                    <span class="seance__data"></span>
+                    <span class="seance__time"></span>
+                    <span class="seance__hall-name"></span>
+                </div>
+                <div class="seance__hall-scheme__container">
+                    <div class="seance__hall__screen-and-scheme">
+                        <img src="img/screen.png" class="seance__hall__screen" alt="screen">
+                        <div class="seance__hall-scheme"></div>
+                    </div>
+                    <div class="seance__all-seats-types">
+                        <div class="seance__seat__color-and-name seance__seat-standart-free">
+                            <div class="seance__seat-type color__seats-standart-free"></div>
+                            <span class="seance__seat__name">Свободно (250руб)</span>
+                        </div>
+                        <div class="seance__seat__color-and-name seance__seat-busy">
+                            <div class="seance__seat-type color__busy"></div>
+                            <span class="seance__seat__name">Занято</span>
+                        </div>
+                        <div class="seance__seat__color-and-name seance__seat-standart-vip">
+                            <div class="seance__seat-type color__seats-vip-free"></div>
+                            <span class="seance__seat__name">Свободно VIP (350руб)</span>
+                        </div>
+                        <div class="seance__seat__color-and-name seance__seat-selected">
+                            <div class="seance__seat-type color__seats-selected"></div>
+                            <span class="seance__seat__name">Выбрано</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup__seance__buttons">
+                    <button class="client__btn seanse__btn__reserve">Забронировать</button>
+                    <button class="client__btn__cancel seanse__btn__cancel">Отменить</button>
+                </div>
+            </div>
+
             <main class="all-films">
-                <div class="film" data-id="1">
+                <!-- <section class="film" data-id="1">
                     <div class="film__poster-and-description">
                         <img src="img/i.webp" alt="film poster" class="film__poster">
                         <div class="film__description">
@@ -79,72 +119,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="film" data-id="1">
-                    <div class="film__poster-and-description">
-                        <img src="img/i.webp" alt="film poster" class="film__poster">
-                        <div class="film__description">
-                            <span class="film__name">Титаник</span>
-                            <span class="film__about">"История противостояния солдата Кайла Риза и киборга-терминатора, прибывших в 1984-й год из пост-апокалиптического будущего, где миром правят машины-убийцы, а человечество находится на грани вымирания. Цель киборга: убить девушку по имени Сара Коннор, чей ещё нерождённый сын к 2029 году выиграет войну человечества с машинами. Цель Риза: спасти Сару и остановить Терминатора любой ценой."</span>
-                            <span class="film__duration-and-origin">120 минут США</span>
-                        </div>
-                    </div>
-                    <div class="film__all-halls">
-                        <div class="film__hall" data-id="1">
-                            <span class="hall__name">Зал 1</span>
-                            <div class="film__hall__all-seances">
-                                <div class="film__hall__seance" data-id="1">08:00</div>
-                                <div class="film__hall__seance" data-id="2">09:00</div>
-                                <div class="film__hall__seance" data-id="3">12:00</div>
-                                <div class="film__hall__seance" data-id="4">13:00</div>
-                            </div>
-                        </div>
-                        <div class="film__hall" data-id="2">
-                            <span class="hall__name">Зал 2</span>
-                            <div class="film__hall__all-seances">
-                                <div class="film__hall__seance" data-id="5">08:00</div>
-                                <div class="film__hall__seance" data-id="6">09:00</div>
-                                <div class="film__hall__seance" data-id="7">12:00</div>
-                                <div class="film__hall__seance" data-id="18">13:00</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="film" data-id="1">
-                    <div class="film__poster-and-description">
-                        <img src="img/i.webp" alt="film poster" class="film__poster">
-                        <div class="film__description">
-                            <span class="film__name">Титаник</span>
-                            <span class="film__about">"История противостояния солдата Кайла Риза и киборга-терминатора, прибывших в 1984-й год из пост-апокалиптического будущего, где миром правят машины-убийцы, а человечество находится на грани вымирания. Цель киборга: убить девушку по имени Сара Коннор, чей ещё нерождённый сын к 2029 году выиграет войну человечества с машинами. Цель Риза: спасти Сару и остановить Терминатора любой ценой."</span>
-                            <span class="film__duration-and-origin">120 минут США</span>
-                        </div>
-                    </div>
-                    <div class="film__all-halls">
-                        <div class="film__hall" data-id="1">
-                            <span class="hall__name">Зал 1</span>
-                            <div class="film__hall__all-seances">
-                                <div class="film__hall__seance" data-id="1">08:00</div>
-                                <div class="film__hall__seance" data-id="2">09:00</div>
-                                <div class="film__hall__seance" data-id="3">12:00</div>
-                                <div class="film__hall__seance" data-id="4">13:00</div>
-                            </div>
-                        </div>
-                        <div class="film__hall" data-id="2">
-                            <span class="hall__name">Зал 2</span>
-                            <div class="film__hall__all-seances">
-                                <div class="film__hall__seance" data-id="5">08:00</div>
-                                <div class="film__hall__seance" data-id="6">09:00</div>
-                                <div class="film__hall__seance" data-id="7">12:00</div>
-                                <div class="film__hall__seance" data-id="18">13:00</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>                
+                </section>              -->
             </main>
         </div>
     </div>
-    <script src="js/index.js"></script>
+    <script type="module"src="js/index.js"></script>
+    <script type="module" src="js/seance.js"></script>
 </body>
 </html>

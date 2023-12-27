@@ -44,6 +44,7 @@ body {
 
 .client {
   width: 100%;
+  min-height: 100vh;
   background-image: url("../img/mainbackground.jfif");
   background-repeat: no-repeat;
   background-size: cover;
@@ -205,4 +206,46 @@ body {
     0px 2px 2px 0px rgba(0, 0, 0, 0.24);
   font-size: 15px;
   font-weight: 400;
+  cursor: pointer;
+}
+
+.film__hall__seance__not-available {
+  cursor: auto;
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.popup__seance__buttons {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.client__btn,
+.seanse__btn__reserve {
+  padding: 11.2px 56.503px 11.9px 56.887px;
+  border-radius: 3px;
+  background: #16a6af;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12),
+    0px 3px 3px 0px rgba(0, 0, 0, 0.24);
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.client__btn__cancel {
+  padding: 11.2px 31.242px 11.9px 31.558px;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12),
+    0px 3px 3px 0px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+  color: #63536c;
+  font-size: 14px;
+  text-transform: uppercase;
+  border: none;
 }

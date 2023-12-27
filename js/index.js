@@ -1,3 +1,5 @@
+import { openPopupSeance } from "./seance.js";
+
 // Выбор дня недели
 const allDates = Array.from(document.querySelectorAll(".client__header__data"));
 const loginBtn = document.getElementById("btn-login");
@@ -15,6 +17,7 @@ function changeActiveData(index) {
       arr[i].classList.remove("client__header__data__active");
     }
   });
+  createAllFilms();
 }
 
 // Переход на страницу авторизации
@@ -34,9 +37,11 @@ function fillDates() {
   dataBlocks[0].querySelector(".data-of-mounth").textContent =
     daysOfWeek[currentDate.getDay()] + ", " + currentDate.getDate();
   isHoliday(daysOfWeek[currentDate.getDay()], dataBlocks[0]);
-  dataBlocks[0].dataset.date = `${currentDate.getDate()}.${
-    currentDate.getMonth() + 1
-  }.${currentDate.getFullYear()}`;
+  dataBlocks[0].dataset.date = getCorrectDate(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+    currentDate.getDate()
+  );
 
   for (let i = 1; i < dataBlocks.length; i++) {
     const date = new Date(currentDate.getTime() + i * 24 * 60 * 60 * 1000);
@@ -45,10 +50,18 @@ function fillDates() {
     dataBlocks[i].querySelector(".data-of-mounth").textContent = date.getDate();
 
     isHoliday(daysOfWeek[date.getDay()], dataBlocks[i]);
-    dataBlocks[i].dataset.date = `${date.getDate()}.${
-      date.getMonth() + 1
-    }.${date.getFullYear()}`;
+    dataBlocks[i].dataset.date = getCorrectDate(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      date.getDate()
+    );
   }
+}
+
+function getCorrectDate(year, mounth, date) {
+  const correctMounth = mounth > 9 ? mounth : `0${mounth}`;
+  const correctDate = date > 9 ? date : `0${date}`;
+  return `${correctDate}.${correctMounth}.${year}`;
 }
 
 fillDates();
@@ -62,7 +75,7 @@ function isHoliday(day, block) {
 // Все фильмы
 const allFilmsContainer = document.querySelector(".all-films");
 
-function getAllData() {
+export function getAllData() {
   return fetch("https://shfe-diplom.neto-server.ru/alldata")
     .then((response) => response.json())
     .then((data) => {
@@ -86,9 +99,10 @@ function createAllFilms() {
     const allSeances = data.result.seances;
 
     allFilms.map((el) => {
-      const film = document.createElement("div");
+      const film = document.createElement("section");
       film.classList.add("film");
       film.dataset.id = el.id;
+      film.dataset.name = el.film_name;
       film.innerHTML = `<div class="film__poster-and-description">
   <img src=${el.film_poster} alt="film poster" class="film__poster">
   <div class="film__description">
@@ -111,7 +125,8 @@ function createHallsForFilm(allHalls, allSeances, film) {
   allSeances.map((seance) => {
     if (
       seance.seance_filmid == film.dataset.id &&
-      !uniqueHalls.includes(seance.seance_hallid)
+      !uniqueHalls.includes(seance.seance_hallid) &&
+      allHalls.find((el) => el.id == seance.seance_hallid).hall_open == 1
     ) {
       uniqueHalls.push(seance.seance_hallid);
       const filmHall = document.createElement("div");
@@ -121,6 +136,7 @@ function createHallsForFilm(allHalls, allSeances, film) {
         (el) => el.id == seance.seance_hallid
       ).hall_name;
       filmHall.innerHTML = `<span class="hall__name">${hallName}</span>`;
+      filmHall.dataset.hallname = hallName;
       hallsContainer.insertAdjacentElement("beforeend", filmHall);
       createSeancesForHall(filmHall, allSeances, film);
     }
@@ -139,12 +155,38 @@ function createSeancesForHall(filmHall, allSeances, film) {
       const seanceInHall = document.createElement("div");
       seanceInHall.classList.add("film__hall__seance");
       seanceInHall.dataset.id = seance.id;
+      seanceInHall.dataset.time = seance.seance_time;
       seanceInHall.textContent = seance.seance_time;
+      isAvailableSeance(seanceInHall, seance.seance_time);
+      seanceInHall.addEventListener("click", () =>
+        openPopupSeance(seanceInHall, filmHall, film)
+      );
       allSeancesInHall.insertAdjacentElement("beforeend", seanceInHall);
     }
   });
 
   filmHall.insertAdjacentElement("beforeend", allSeancesInHall);
+}
+
+function isAvailableSeance(seance, seanceTime) {
+  const datesInHeader = document.querySelector(".client__header__dates");
+  const isToday = datesInHeader.children[0].classList.contains(
+    "client__header__data__active"
+  );
+  const now = new Date();
+  const [hours, minutes] = seanceTime.split(":");
+  const seanceDate = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    hours,
+    minutes
+  );
+
+  if (now >= seanceDate && isToday) {
+    seance.classList.add("film__hall__seance__not-available");
+    seance.disabled = true;
+  }
 }
 
 createAllFilms();
