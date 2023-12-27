@@ -124,6 +124,34 @@
                 </div>
             </div>
 
+            <!-- Окно билета -->
+            <div class="popup__ticket hidden">
+                <h1 class="popup__ticket__title">Электронный билет</h1>
+                <div class="popup__ticket-container">
+                    <div class="popup__ticket__description">
+                        <span class="description__name">На фильм: 
+                            <span class="description__item ticket__film-name"></span>
+                        </span>
+                        <span class="description__name">Места: 
+                            <span class="description__item ticket__seats"></span>
+                        </span>
+                        <span class="description__name">В зале: 
+                            <span class="description__item ticket__hall"></span>
+                        </span>
+                        <span class="description__name">Дата: 
+                            <span class="description__item ticket__date"></span>
+                        </span>
+                        <span class="description__name">Начало сеанса: 
+                            <span class="description__item ticket__time"></span>
+                        </span>
+                    </div>
+                    <div class="popup__ticket__code"></div>
+                    <span class="popup__ticket__bottom-text">Покажите QR-код нашему контроллеру для подтверждения бронирования.</span>
+                    <span class="popup__ticket__bottom-text">Приятного просмотра!</span>
+                    <button class="client__btn__cancel ticket__btn__cancel">Закрыть</button>
+                </div>
+            </div>
+
             <main class="all-films">
                 <!-- <section class="film" data-id="1">
                     <div class="film__poster-and-description">

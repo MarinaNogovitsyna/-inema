@@ -5,7 +5,8 @@
   margin-top: 10px;
 }
 
-.popup__get-code__title {
+.popup__get-code__title,
+.popup__ticket__title {
   color: #c76f00;
   font-size: 22px;
   font-weight: 700;
@@ -20,7 +21,9 @@
 }
 
 .popup__get-code__title::before,
-.popup__get-code-container::before {
+.popup__get-code-container::before,
+.popup__ticket__title::before,
+.popup__ticket-container::before {
   content: "";
   position: absolute;
   width: 100%;
@@ -34,7 +37,9 @@
 }
 
 .popup__get-code__title::after,
-.popup__get-code-container::after {
+.popup__get-code-container::after,
+.popup__ticket__title::after,
+.popup__ticket-container::after {
   content: "";
   position: absolute;
   width: 100%;
@@ -47,14 +52,16 @@
   background-color: rgba(241, 235, 230, 0);
 }
 
-.popup__get-code-container {
+.popup__get-code-container,
+.popup__ticket-container {
   padding: 20px 15px 30px 15px;
   box-sizing: border-box;
   background: rgba(241, 235, 230, 0.95);
   position: relative;
 }
 
-.popup__get-code__description {
+.popup__get-code__description,
+.popup__ticket__description {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -77,9 +84,23 @@
   margin-bottom: 30px;
 }
 
-.popup__get-code__bottom-text {
+.popup__get-code__bottom-text,
+.popup__ticket__bottom-text {
   display: block;
   margin-top: 10px;
   font-size: 14px;
   font-weight: 300;
+}
+
+.popup__ticket {
+  margin-top: 10px;
+}
+
+.popup__ticket-container {
+  display: flex;
+  flex-direction: column;
+}
+.ticket__btn__cancel {
+  align-self: center;
+  margin-top: 20px;
 }

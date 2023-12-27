@@ -95,7 +95,7 @@ function choosePlace(seat) {
   }
 }
 
-function getDateForFech(date) {
+export function getDateForFech(date) {
   const year = date.slice(6);
   const mounth = date.slice(3, 5);
   const day = date.slice(0, 2);
@@ -130,8 +130,8 @@ function reserveSeance(seanceId, date, hallSchemeContainer, filmHall) {
           ];
 
           arrayOfSeats.push({
-            row: rowNumber,
-            place: placeNumber,
+            row: +rowNumber,
+            place: +placeNumber,
             coast: seatCost,
           });
         }

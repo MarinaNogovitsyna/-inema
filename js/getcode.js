@@ -50,7 +50,9 @@ function createPopupGetCodeInfo(seanceId, arrayOfSeats, data) {
       seatsSpan.textContent,
       hallNameSpan.textContent,
       dateSpan.textContent,
-      timeSpan.textContent
+      timeSpan.textContent,
+      seanceId, 
+      arrayOfSeats
     )
   );
 }
