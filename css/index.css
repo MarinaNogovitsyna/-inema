@@ -1,30 +1,30 @@
 @font-face {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto";
   src: url(../fonts/Roboto-Black.ttf);
   font-weight: 900;
 }
 @font-face {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto";
   src: url(../fonts/Roboto-Bold.ttf);
   font-weight: 700;
 }
 @font-face {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto";
   src: url(../fonts/Roboto-Light.ttf);
   font-weight: 300;
 }
 @font-face {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto";
   src: url(../fonts/Roboto-Medium.ttf);
   font-weight: 500;
 }
 @font-face {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto";
   src: url(../fonts/Roboto-Regular.ttf);
   font-weight: 400;
 }
 @font-face {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto";
   src: url(../fonts/Roboto-Thin.ttf);
   font-weight: 100;
 }
@@ -50,6 +50,7 @@ body {
   background-size: cover;
   /* background-position-y: -210px; */
   padding-top: 14px;
+  padding-bottom: 20px;
 }
 
 .client__container {
@@ -127,6 +128,10 @@ body {
 .client__header__data span {
   font-weight: 400;
   font-size: 14px;
+}
+
+.client__header__data__active span {
+  font-weight: 700;
 }
 
 .holiday {
@@ -248,4 +253,57 @@ body {
   font-size: 14px;
   text-transform: uppercase;
   border: none;
+}
+
+@media (min-width: 769px) and (max-width: 1000px) {
+  .client__container {
+    width: 90%;
+  }
+  .seance__all-seats-types {
+    width: 40%;
+  }
+}
+
+@media (min-width: 515px) and (max-width: 768px) {
+  .client__container {
+    width: 100%;
+  }
+  .client__header__data {
+    padding: 10px 3px 10px 10px;
+  }
+  .client__header__data {
+    width: 20%;
+  }
+  .client__header__data span {
+    font-size: 12px;
+  }
+  /* .seance__all-seats-types {
+    width: 50%;
+  } */
+}
+
+@media (max-width: 514px) {
+  .client__container {
+    width: 100%;
+  }
+  .client__header__data {
+    padding: 10px 3px 10px 10px;
+  }
+  .client__header__data {
+    width: 20%;
+  }
+  .client__header__data span {
+    font-size: 12px;
+  }
+  .popup__get-code__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .seance__all-seats-types {
+    width: 75%;
+  }
+  .client__btn {
+    padding: 11px 15px;
+  }
 }

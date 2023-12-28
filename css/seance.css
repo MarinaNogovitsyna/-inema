@@ -117,3 +117,15 @@
   font-weight: 300;
   align-self: center;
 }
+
+@media (min-width: 769px) and (max-width: 1000px) {
+  .seance__all-seats-types {
+    width: 40%;
+  }
+}
+
+@media (max-width: 514px) {
+  .seance__all-seats-types {
+    width: 75%;
+  }
+}

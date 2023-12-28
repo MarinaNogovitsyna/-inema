@@ -128,3 +128,18 @@
 .popup__form__input__time {
   padding: 8px 0 8px 12px;
 }
+
+@media (min-width: 470px) and (max-width: 800px) {
+  .popup {
+    width: 100%;
+  }
+}
+
+@media (max-width: 469px) {
+  .popup {
+    width: 100%;
+  }
+  .popup__form__buttons {
+    flex-direction: column;
+  }
+}

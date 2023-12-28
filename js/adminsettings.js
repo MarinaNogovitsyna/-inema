@@ -16,9 +16,9 @@ export function getAllHalls() {
     console.log(data);
     createAllHalls(data);
     createHallsForSelection();
-    createHallsForChangePrice();
+    createHallsForChangePrice(data.result.halls);
     createAllSession();
-    createHallsForSales();
+    createHallsForSales(data.result.halls);
   });
 }
 
@@ -63,11 +63,14 @@ async function deleteHall(el, id) {
   el.remove();
   await fetch(`https://shfe-diplom.neto-server.ru/hall/${id}`, {
     method: "DELETE",
-  }).then((response) => response.json());
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      createHallsForChangePrice(data.result.halls);
+      createHallsForSales(data.result.halls);
+    });
   await createHallsForSelection();
-  await createHallsForChangePrice();
   await createAllSession();
-  await createHallsForSales();
 }
 
 // Конфигурация залов
@@ -262,29 +265,25 @@ const allHallsForChangePrice = document.querySelector(
   ".price-configuration__all-halls"
 );
 
-function createHallsForChangePrice() {
+function createHallsForChangePrice(data) {
   allHallsForChangePrice.innerHTML = "";
-  getAllData().then((data) => {
-    const allHalls = data.result.halls;
-    allHalls.map((el) => {
-      const hall = document.createElement("div");
-      hall.textContent = el.hall_name;
-      hall.classList.add("hall-configuration-price__selection");
-      hall.id = `selection-hall-price-${el.id}`;
-      hall.addEventListener("click", () =>
-        changeSelectionHallForPrice(hall.id)
-      );
-      hall.dataset.id = el.id;
-      hall.dataset.hallPriceStandart = el.hall_price_standart;
-      hall.dataset.hallPriceVip = el.hall_price_vip;
+  const allHalls = data;
+  allHalls.map((el) => {
+    const hall = document.createElement("div");
+    hall.textContent = el.hall_name;
+    hall.classList.add("hall-configuration-price__selection");
+    hall.id = `selection-hall-price-${el.id}`;
+    hall.addEventListener("click", () => changeSelectionHallForPrice(hall.id));
+    hall.dataset.id = el.id;
+    hall.dataset.hallPriceStandart = el.hall_price_standart;
+    hall.dataset.hallPriceVip = el.hall_price_vip;
 
-      allHallsForChangePrice.insertAdjacentElement("beforeend", hall);
-      allHallsForChangePrice.firstChild.classList.add(
-        "hall-configuration-price__selection-active"
-      );
-    });
-    getPlacePrice();
+    allHallsForChangePrice.insertAdjacentElement("beforeend", hall);
+    allHallsForChangePrice.firstChild.classList.add(
+      "hall-configuration-price__selection-active"
+    );
   });
+  getPlacePrice();
 }
 
 function changeSelectionHallForPrice(id) {
@@ -522,8 +521,7 @@ function checkFilmPosition(filmPosition, schemePosition) {
 export function createAllSeances() {
   const allHalls = Array.from(document.querySelectorAll(".session__scheme"));
   const allFilms = Array.from(document.querySelectorAll(".film"));
-  const hallLength = allHalls[0].getBoundingClientRect().width;
-  const minutInPixel = hallLength / 1439;
+  const minutInPixel = 100 / 1439;
 
   allHalls.forEach((el) => (el.innerHTML = ""));
 
@@ -547,9 +545,9 @@ export function createAllSeances() {
       filmInHall.insertAdjacentElement("afterbegin", filmInHallSpan);
       filmInHall.style.left = `${
         getMinutes(seance.seance_time) * minutInPixel
-      }px`;
+      }%`;
       filmInHall.classList.add(`background-color-${film.dataset.color}`);
-      filmInHall.style.width = `${film.dataset.duration * minutInPixel}px`;
+      filmInHall.style.width = `${film.dataset.duration * minutInPixel}%`;
 
       filmInHall.addEventListener("mouseenter", () =>
         hoverEffectOnFilm(filmInHallSpan)
@@ -597,28 +595,24 @@ const containerHallsForSales = document.querySelector(
 );
 const salesBtn = document.querySelector(".setting__open-sales-btn");
 
-function createHallsForSales() {
+function createHallsForSales(data) {
   containerHallsForSales.innerHTML = "";
-  getAllData().then((data) => {
-    const allHalls = data.result.halls;
-    allHalls.map((el) => {
-      const hall = document.createElement("div");
-      hall.textContent = el.hall_name;
-      hall.classList.add("sales-configuration__selection");
-      hall.id = `hall-for-sales-${el.id}`;
-      hall.addEventListener("click", () =>
-        changeSelectionHallforSales(hall.id)
-      );
-      hall.dataset.id = el.id;
-      hall.dataset.isopen = el.hall_open;
+  const allHalls = data;
+  allHalls.map((el) => {
+    const hall = document.createElement("div");
+    hall.textContent = el.hall_name;
+    hall.classList.add("sales-configuration__selection");
+    hall.id = `hall-for-sales-${el.id}`;
+    hall.addEventListener("click", () => changeSelectionHallforSales(hall.id));
+    hall.dataset.id = el.id;
+    hall.dataset.isopen = el.hall_open;
 
-      containerHallsForSales.insertAdjacentElement("beforeend", hall);
-      containerHallsForSales.firstChild.classList.add(
-        "sales-configuration__selection-active"
-      );
+    containerHallsForSales.insertAdjacentElement("beforeend", hall);
+    containerHallsForSales.firstChild.classList.add(
+      "sales-configuration__selection-active"
+    );
 
-      getSalesBtnText(containerHallsForSales.firstChild);
-    });
+    getSalesBtnText(containerHallsForSales.firstChild);
   });
 }
 

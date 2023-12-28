@@ -104,3 +104,8 @@
   align-self: center;
   margin-top: 20px;
 }
+
+.popup__ticket__code {
+  margin: auto;
+  margin-bottom: 20px;
+}

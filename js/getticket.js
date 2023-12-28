@@ -28,10 +28,11 @@ export function createTicket(
   dateSpan.textContent = date;
   const timeSpan = document.querySelector(".ticket__time");
   timeSpan.textContent = time;
+
+  createQRCode(date, time, filmName, hallName, arrayOfSeats);
 }
 
 function fetchTicket(seanceId, date, seats) {
-  console.log(seats);
   const correctDate = getDateForFech(date);
   const params = new FormData();
   params.set("seanceId", seanceId);
@@ -46,7 +47,27 @@ function fetchTicket(seanceId, date, seats) {
     .then((data) => console.log(data));
 }
 
+function createQRCode(date, time, filmName, hallName, arrayOfSeats) {
+  const codeDiv = document.querySelector(".popup__ticket__code");
+  const seatsInfo = getRowSeatsCoast(arrayOfSeats);
+  const ticketInfo = `Ваш электронный билет. Дата: ${date}. Время: ${time}. Фильм: ${filmName}. Зал: ${hallName}. ${seatsInfo} Билет действителен строго на свой сеанс`;
+  const qrcode = QRCreator(ticketInfo, { image: "png", modsize: 2 });
+  const content = (qrcode) => {
+    return qrcode.error
+      ? `недопустимые исходные данные ${qrcode.error}`
+      : qrcode.result;
+  };
+  codeDiv.append(content(qrcode));
+}
+
+function getRowSeatsCoast(arr) {
+  let info = "";
+  arr.map((el) => {
+    info += `Ряд ${el.row}, Место ${el.place}, Цена ${el.coast}. `;
+  });
+  return info;
+}
+
 btnTicketCancel.addEventListener("click", () => {
-  popupTicket.classList.add("hidden");
-  popupGetCode.classList.remove("hidden");
+  location.reload();
 });
