@@ -5,11 +5,11 @@ const autorisationBtn = document.querySelector(".login__form__btn");
 const autorisationForm = document.querySelector(".login__form");
 const allSettingsPage = document.querySelector(".admin__all-settings");
 
-if (document.cookie.includes('isLoggedIn=true')) {
-  // Пользователь уже авторизован, показываем нужную страницу
-  adminPageLogin.style.display = 'none';
-  allSettingsPage.classList.add("admin__all-settings-active");
-}
+// if (document.cookie.includes('isLoggedIn=true')) {
+//   // Пользователь уже авторизован, показываем нужную страницу
+//   adminPageLogin.style.display = 'none';
+//   allSettingsPage.classList.add("admin__all-settings-active");
+// }
 
 autorisationBtn.onclick = async (e) => {
   e.preventDefault();
@@ -28,3 +28,5 @@ autorisationBtn.onclick = async (e) => {
   }
   autorisationForm.reset();
 };
+
+

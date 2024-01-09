@@ -49,6 +49,7 @@ function fetchTicket(seanceId, date, seats) {
 
 function createQRCode(date, time, filmName, hallName, arrayOfSeats) {
   const codeDiv = document.querySelector(".popup__ticket__code");
+  codeDiv.innerHTML = "";
   const seatsInfo = getRowSeatsCoast(arrayOfSeats);
   const ticketInfo = `Ваш электронный билет. Дата: ${date}. Время: ${time}. Фильм: ${filmName}. Зал: ${hallName}. ${seatsInfo} Билет действителен строго на свой сеанс`;
   const qrcode = QRCreator(ticketInfo, { image: "png", modsize: 2 });

@@ -15,10 +15,11 @@ export function getAllHalls() {
   getAllData().then((data) => {
     console.log(data);
     createAllHalls(data);
-    createHallsForSelection();
+    createHallsForSelection(data.result.halls);
     createHallsForChangePrice(data.result.halls);
     createAllSession();
     createHallsForSales(data.result.halls);
+    createAllFilms(data.result.films);
   });
 }
 
@@ -68,8 +69,8 @@ async function deleteHall(el, id) {
     .then((data) => {
       createHallsForChangePrice(data.result.halls);
       createHallsForSales(data.result.halls);
+      createHallsForSelection(data.result.halls);
     });
-  await createHallsForSelection();
   await createAllSession();
 }
 
@@ -79,29 +80,31 @@ const allHallsForSelection = document.querySelector(
 );
 let activeHallId;
 
-function createHallsForSelection() {
+async function createHallsForSelection(halls) {
+  const allHalls = halls
+    ? halls
+    : await getAllData().then((data) => {
+        return data.result.halls;
+      });
   allHallsForSelection.innerHTML = "";
-  getAllData().then((data) => {
-    const allHalls = data.result.halls;
-    allHalls.map((el) => {
-      const hall = document.createElement("div");
-      hall.textContent = el.hall_name;
-      hall.classList.add("hall-configuration__selection");
-      hall.id = `selection-hall-${el.id}`;
-      hall.addEventListener("click", () => changeSelectionHall(hall.id));
-      hall.dataset.id = el.id;
-      hall.dataset.rows = el.hall_rows;
-      hall.dataset.places = el.hall_places;
+  allHalls.map((el) => {
+    const hall = document.createElement("div");
+    hall.textContent = el.hall_name;
+    hall.classList.add("hall-configuration__selection");
+    hall.id = `selection-hall-${el.id}`;
+    hall.addEventListener("click", () => changeSelectionHall(hall.id));
+    hall.dataset.id = el.id;
+    hall.dataset.rows = el.hall_rows;
+    hall.dataset.places = el.hall_places;
 
-      allHallsForSelection.insertAdjacentElement("beforeend", hall);
-      allHallsForSelection.firstChild.classList.add(
-        "hall-configuration__selection-active"
-      );
-      activeHallId = allHallsForSelection.firstChild.id;
+    allHallsForSelection.insertAdjacentElement("beforeend", hall);
+    allHallsForSelection.firstChild.classList.add(
+      "hall-configuration__selection-active"
+    );
+    activeHallId = allHallsForSelection.firstChild.id;
 
-      getHallSize();
-      createHallScheme(allHallsForSelection.firstChild.dataset.id);
-    });
+    getHallSize();
+    createHallScheme(allHallsForSelection.firstChild.dataset.id, allHalls);
   });
 }
 
@@ -135,26 +138,31 @@ function getHallSize() {
 // Создание cхемы зала
 let hallScheme = document.querySelector(".hall-scheme__hall");
 
-function createHallScheme(id) {
-  getAllData().then((data) => {
-    hallScheme.innerHTML = "";
-    const activeHall = data.result.halls.find((el) => el.id == id);
-    const config = activeHall.hall_config;
-    for (let i = 0; i < config.length; i++) {
-      const rowDiv = document.createElement("div");
-      rowDiv.classList.add("hall-scheme__row");
-      for (let j = 0; j < config[i].length; j++) {
-        const placeDiv = document.createElement("div");
-        placeDiv.classList.add(`${config[i][j]}`);
-        placeDiv.dataset.type = `${config[i][j]}`;
-        placeDiv.dataset.row = i + 1;
-        placeDiv.dataset.place = j + 1;
-        placeDiv.addEventListener("click", () => changeTypePlace(placeDiv));
-        rowDiv.appendChild(placeDiv);
-      }
-      hallScheme.appendChild(rowDiv);
+async function createHallScheme(id, halls) {
+  let activeHall;
+  if (halls) {
+    activeHall = halls.find((el) => el.id == id);
+  } else {
+    activeHall = await getAllData().then((data) => {
+      return data.result.halls.find((el) => el.id == id);
+    });
+  }
+  hallScheme.innerHTML = "";
+  const config = activeHall.hall_config;
+  for (let i = 0; i < config.length; i++) {
+    const rowDiv = document.createElement("div");
+    rowDiv.classList.add("hall-scheme__row");
+    for (let j = 0; j < config[i].length; j++) {
+      const placeDiv = document.createElement("div");
+      placeDiv.classList.add(`${config[i][j]}`);
+      placeDiv.dataset.type = `${config[i][j]}`;
+      placeDiv.dataset.row = i + 1;
+      placeDiv.dataset.place = j + 1;
+      placeDiv.addEventListener("click", () => changeTypePlace(placeDiv));
+      rowDiv.appendChild(placeDiv);
     }
-  });
+    hallScheme.appendChild(rowDiv);
+  }
 }
 
 // Изменение количества рядов и кресел
@@ -368,45 +376,45 @@ btnSavePrices.addEventListener("click", () => {
 const colors = ["yellow", "green", "lightgreen", "lightblue", "darkblue"];
 const allFilms = document.querySelector(".all-films__container");
 
-createAllFilms();
-
-export function createAllFilms() {
+export async function createAllFilms(filmsFromFetch) {
   allFilms.innerHTML = "";
-  getAllData().then((data) => {
-    const films = data.result.films;
-    films.map((el) => {
-      const film = document.createElement("div");
-      film.classList.add("film");
-      film.id = `film-${el.id}`;
-      film.dataset.id = el.id;
-      film.dataset.name = el.film_name;
-      film.dataset.duration = el.film_duration;
-      film.innerHTML = `<img src="${el.film_poster}" alt="img of film" class="film__poster">
+  const films = filmsFromFetch
+    ? filmsFromFetch
+    : await getAllData().then((data) => {
+        return data.result.films;
+      });
+  films.map((el) => {
+    const film = document.createElement("div");
+    film.classList.add("film");
+    film.id = `film-${el.id}`;
+    film.dataset.id = el.id;
+    film.dataset.name = el.film_name;
+    film.dataset.duration = el.film_duration;
+    film.innerHTML = `<img src="${el.film_poster}" alt="img of film" class="film__poster">
       <div class="film__name-and-duration">
           <span class="film__name">${el.film_name}</span>
           <span class="film__duration">${el.film_duration} минут</span>
       </div>`;
 
-      const basket = document.createElement("img");
-      basket.src = "img/basket.png";
-      basket.classList.add("basket");
-      basket.classList.add("film__basket");
-      basket.addEventListener("click", () =>
-        deleteFilm(basket.parentElement, el.id)
-      );
+    const basket = document.createElement("img");
+    basket.src = "img/basket.png";
+    basket.classList.add("basket");
+    basket.classList.add("film__basket");
+    basket.addEventListener("click", () =>
+      deleteFilm(basket.parentElement, el.id)
+    );
 
-      film.insertAdjacentElement("beforeend", basket);
-      film.addEventListener("mousedown", (event) => {
-        raisingFilm(film, event);
-      });
-      allFilms.insertAdjacentElement("beforeend", film);
+    film.insertAdjacentElement("beforeend", basket);
+    film.addEventListener("mousedown", (event) => {
+      raisingFilm(film, event);
+    });
+    allFilms.insertAdjacentElement("beforeend", film);
 
-      const films = document.querySelectorAll(".film");
-      films.forEach((film, index) => {
-        const colorIndex = index % colors.length;
-        film.classList.add(`background-color-${colors[colorIndex]}`);
-        film.dataset.color = colors[colorIndex];
-      });
+    const films = document.querySelectorAll(".film");
+    films.forEach((film, index) => {
+      const colorIndex = index % colors.length;
+      film.classList.add(`background-color-${colors[colorIndex]}`);
+      film.dataset.color = colors[colorIndex];
     });
   });
 }

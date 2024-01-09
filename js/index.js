@@ -106,7 +106,7 @@ function createAllFilms() {
       film.innerHTML = `<div class="film__poster-and-description">
   <img src=${el.film_poster} alt="film poster" class="film__poster">
   <div class="film__description">
-      <span class="film__name">${el.film_name}</span>
+      <h2 class="film__name">${el.film_name}</h2>
       <span class="film__about">${el.film_description}</span>
       <span class="film__duration-and-origin">${el.film_duration} минут ${el.film_origin}</span>
   </div>
@@ -155,17 +155,17 @@ function createHallsForFilm(allHalls, allSeances, film) {
 }
 
 function createSeancesForHall(filmHall, allSeances, film) {
-  const allSeancesInHall = document.createElement("div");
+  const allSeancesInHall = document.createElement("ul");
   allSeancesInHall.classList.add("film__hall__all-seances");
   const filmId = film.dataset.id;
   const hallId = filmHall.dataset.id;
   allSeances.map((seance) => {
     if (seance.seance_hallid == hallId && seance.seance_filmid == filmId) {
-      const seanceInHall = document.createElement("div");
+      const seanceInHall = document.createElement("li");
       seanceInHall.classList.add("film__hall__seance");
       seanceInHall.dataset.id = seance.id;
       seanceInHall.dataset.time = seance.seance_time;
-      seanceInHall.textContent = seance.seance_time;
+      seanceInHall.innerHTML = `<a>${seance.seance_time}</a>`;
       isAvailableSeance(seanceInHall, seance.seance_time);
       seanceInHall.addEventListener("click", () =>
         openPopupSeance(seanceInHall, filmHall, film)
