@@ -92,7 +92,7 @@ async function createHallsForSelection(halls) {
     hall.textContent = el.hall_name;
     hall.classList.add("hall-configuration__selection");
     hall.id = `selection-hall-${el.id}`;
-    hall.addEventListener("click", () => changeSelectionHall(hall.id));
+    hall.addEventListener("click", () => changeSelectionHall(hall.id, el));
     hall.dataset.id = el.id;
     hall.dataset.rows = el.hall_rows;
     hall.dataset.places = el.hall_places;
@@ -103,13 +103,19 @@ async function createHallsForSelection(halls) {
     );
     activeHallId = allHallsForSelection.firstChild.id;
 
-    getHallSize();
+    getHallSize(allHalls[0]);
     createHallScheme(allHallsForSelection.firstChild.dataset.id, allHalls);
   });
 }
 
-function changeSelectionHall(id) {
+const numberRowsInput = document.querySelector(".number-rows__input");
+const numberSeatsInput = document.querySelector(".number-seats__input");
+
+function changeSelectionHall(id, hall) {
   const allHalls = Array.from(allHallsForSelection.children);
+  numberRowsInput.value = "";
+  numberSeatsInput.value = "";
+
   allHalls.map((el) => {
     if (
       el.id === id &&
@@ -122,17 +128,13 @@ function changeSelectionHall(id) {
       el.classList.remove("hall-configuration__selection-active");
     }
   });
-  getHallSize();
+  getHallSize(hall);
 }
 
 //Количество мест по умолчанию
-const numberRowsInput = document.querySelector(".number-rows__input");
-const numberSeatsInput = document.querySelector(".number-seats__input");
-
-function getHallSize() {
-  const activeHall = document.getElementById(activeHallId);
-  numberRowsInput.placeholder = activeHall.dataset.rows;
-  numberSeatsInput.placeholder = activeHall.dataset.places;
+function getHallSize(hall) {
+  numberRowsInput.placeholder = hall.hall_rows;
+  numberSeatsInput.placeholder = hall.hall_places;
 }
 
 // Создание cхемы зала

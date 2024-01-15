@@ -98,7 +98,18 @@ function createAllFilms() {
     const allHalls = data.result.halls;
     const allSeances = data.result.seances;
 
-    allFilms.map((el) => {
+    const filmsWithSeances = allFilms.filter((el) => {
+      return allSeances.find((seance) => {
+        return (
+          seance.seance_filmid == el.id &&
+          allHalls.find((hall) => {
+            return hall.id == seance.seance_hallid;
+          }).hall_open
+        );
+      });
+    });
+
+    filmsWithSeances.map((el) => {
       const film = document.createElement("section");
       film.classList.add("film");
       film.dataset.id = el.id;

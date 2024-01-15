@@ -51,7 +51,7 @@ function createPopupGetCodeInfo(seanceId, arrayOfSeats, data) {
       hallNameSpan.textContent,
       dateSpan.textContent,
       timeSpan.textContent,
-      seanceId, 
+      seanceId,
       arrayOfSeats
     )
   );
@@ -60,7 +60,7 @@ function createPopupGetCodeInfo(seanceId, arrayOfSeats, data) {
 function getStrOfPlaces(arr) {
   let string = "";
   arr.map((el) => {
-    string += `${el.place}, `;
+    string += `${el.row}/${el.place}, `;
   });
 
   return string.slice(0, -2);
